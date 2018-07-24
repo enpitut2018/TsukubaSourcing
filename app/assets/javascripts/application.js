@@ -20,13 +20,3 @@
 //= require turbolinks
 // Loads all Semantic javascripts
 //= require semantic-ui
-//= require_tree .i//= require jquery
-//= require jquery_ujs
-//= require rails-ujs
-//= require turbolinks
-// Loads all Semantic javascripts
-//= require semantic-ui
-//= require_tree .
-$(function(){
-  $('.ui.dropdown').dropdown();
-})
