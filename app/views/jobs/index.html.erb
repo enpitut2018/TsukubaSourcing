@@ -18,6 +18,12 @@
         <td><%= job.title %></td>
         <td><%= job.user_id %></td>
         <td><%= job.description %></td>
+        <td>
+          <%= button_to '参加', assigns_path, method: :create, params:{assign:{job_id: job.id, user_id: @currentUserId, status: 'new'}} %>
+        </td>
+        <td>
+          <%= button_to '完了', assign_path(5), method: :put, params:{assign:{status: 'complete'}} %>
+        </td>
         <td><%= link_to 'Show', job %></td>
         <td><%= link_to 'Edit', edit_job_path(job) %></td>
         <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
