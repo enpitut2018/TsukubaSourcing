@@ -14,7 +14,7 @@ class JobsTest < ApplicationSystemTestCase
     visit jobs_url
     click_on "New Job"
 
-    fill_in "Descrition", with: @job.descrition
+    fill_in "description", with: @job.description
     fill_in "Title", with: @job.title
     fill_in "User", with: @job.user_id
     click_on "Create Job"
@@ -27,7 +27,7 @@ class JobsTest < ApplicationSystemTestCase
     visit jobs_url
     click_on "Edit", match: :first
 
-    fill_in "Descrition", with: @job.descrition
+    fill_in "description", with: @job.description
     fill_in "Title", with: @job.title
     fill_in "User", with: @job.user_id
     click_on "Update Job"

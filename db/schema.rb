@@ -20,10 +20,12 @@ ActiveRecord::Schema.define(version: 2018_07_24_062027) do
     t.datetime "updated_at", null: false
   end
 
+ActiveRecord::Schema.define(version: 2018_07_24_053342) do
+
   create_table "jobs", force: :cascade do |t|
     t.string "title"
     t.integer "user_id"
-    t.string "descrition"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
