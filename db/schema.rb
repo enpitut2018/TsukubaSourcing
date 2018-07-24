@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(version: 2018_07_24_062027) do
     t.datetime "updated_at", null: false
   end
 
-ActiveRecord::Schema.define(version: 2018_07_24_053342) do
-
   create_table "jobs", force: :cascade do |t|
     t.string "title"
     t.integer "user_id"
