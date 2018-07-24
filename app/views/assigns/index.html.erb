@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assigns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Job</th>
+      <th>User</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assigns.each do |assign| %>
+      <tr>
+        <td><%= assign.job_id %></td>
+        <td><%= assign.user_id %></td>
+        <td><%= assign.status %></td>
+        <td><%= link_to 'Show', assign %></td>
+        <td><%= link_to 'Edit', edit_assign_path(assign) %></td>
+        <td><%= link_to 'Destroy', assign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Assign', new_assign_path %>
