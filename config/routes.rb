@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :jobcomments
+  namespace :jobs do
+    resources :evaluations
+  end
   resources :assigns
   devise_for :users
   resources :jobs

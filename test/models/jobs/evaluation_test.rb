@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class JobcommentTest < ActiveSupport::TestCase
+class Jobs::EvaluationTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
