@@ -12,6 +12,10 @@
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <% if user_signed_in? %>
+      <p>user: <%= current_user[:name] %></p>
+      <a href="/users/sign_out">sign out</a>
+    <% end %>
     <%= yield %>
   </body>
 </html>
