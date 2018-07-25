@@ -17,7 +17,7 @@
         <li><a href="/jobs">Jobs</a></li>
         <li><a href="/jobs/new">Add Job</a></li>
         <% if user_signed_in? %>
-          <li><%= link_to current_user[:name], user_path(current_user[:id]) %></li>
+          <li><%= link_to current_user[:name], users_show_path(current_user[:id]) %></li>
           <li><a href="/users/sign_out">Sign Out</a></li>
         <% else %>
           <li><a href="/users/sign_up">Sign Up</a></li>

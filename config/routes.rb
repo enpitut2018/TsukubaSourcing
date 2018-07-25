@@ -2,10 +2,7 @@ Rails.application.routes.draw do
   get 'users/show'
   root :to => 'jobs#index'
   resources :assigns
-  devise_for :users, controllers: {
-    sessions: 'users/sessions'
-  }
-  resources :users, only: [:show]
+  devise_for :users
   resources :jobs do
     member do
       post 'create_message'
