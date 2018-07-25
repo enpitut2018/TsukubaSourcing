@@ -12,6 +12,7 @@ before_script:
   - bin/rails db:create
   - bin/rails db:migrate RAILS_ENV=test
   - bin/rails db:seed
+  - bin/rails db:fixtures:load RAILS_ENV=test
 
 script:
   - bin/rails test
