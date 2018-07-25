@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :jobcomments
   root :to => 'jobs#index'
   resources :assigns
   devise_for :users, controllers: {
