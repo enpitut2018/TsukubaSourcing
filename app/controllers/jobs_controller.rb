@@ -11,8 +11,8 @@ class JobsController < ApplicationController
   # GET /jobs/1
   # GET /jobs/1.json
   def show
-    @chat_list = Chat.where(job_id: @job.id)
-    @employer = User.find_by(id: @job.user_id)
+    @employer = @job.user
+    @chat_list = user_signed_in? ? select_chats(current_user.id, @employer) : nil
   end
 
   # GET /jobs/new
@@ -87,10 +87,7 @@ class JobsController < ApplicationController
 
   def chat
     @worker_id = params.require(:worker_id)
-    @chat_list = Chat.where(job_id: @job.id)
-    p @chat_list
-    @chat_list=@chat_list.where(from_id: current_user.id,to_id: @worker_id).or(@chat_list.where(from_id: @worker_id,to_id: current_user.id))
-    @chat_list.reorder(:timestamp)
+    @chat_list = select_chats(current_user.id, @worker_id)
   end
 
   private
@@ -102,5 +99,12 @@ class JobsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
       params.require(:job).permit(:title, :user_id, :description)
+    end
+
+    def select_chats(user1, user2)
+      p Chat.first
+      @chat_list = @job.chats
+      @chat_list = @chat_list.where(from_id: user1,to_id: user2).or(@chat_list.where(from_id: user2,to_id: user1))
+      @chat_list.reorder("created_at DESC")
     end
 end

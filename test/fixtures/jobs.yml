@@ -2,10 +2,15 @@
 
 one:
   title: MyString
-  user_id: 1
+  user: test_user
   description: MyString
 
 two:
   title: MyString
-  user_id: 1
+  user: test_user
+  description: MyString
+
+test_job:
+  title: MyString
+  user: test_user
   description: MyString
