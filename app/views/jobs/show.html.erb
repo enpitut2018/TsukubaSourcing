@@ -17,3 +17,19 @@
 
 <%= link_to 'Edit', edit_job_path(@job) %> |
 <%= link_to 'Back', jobs_path %>
+
+<% if current_user.id == @job.user_id %>
+  <%= button_to "問い合わせ一覧", worker_list_job_path(@job), method: :get %>
+<% else %>
+  <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
+    <%= text_field_tag :message %>
+    <%= hidden_field_tag :from_id, current_user.id %>
+    <%= hidden_field_tag :to_id, @employer.id %>
+    <%= submit_tag "送信" %>
+    <% @chat_list.each do |chat| %>
+      <br>
+      <%= chat.from_id %>
+      <%= chat.message %>
+    <% end %>
+  <% end %>
+<% end %>

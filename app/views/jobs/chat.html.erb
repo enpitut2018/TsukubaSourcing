@@ -1,0 +1,11 @@
+<%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
+<%= text_field_tag :message %>
+<%= hidden_field_tag :from_id, current_user.id %>
+<%= hidden_field_tag :to_id, @worker_id %>
+<%= submit_tag "送信" %>
+<% @chat_list.each do |chat| %>
+    <br>
+    <%= chat.from_id %>
+    <%= chat.message %>
+<% end %>
+<% end %>
