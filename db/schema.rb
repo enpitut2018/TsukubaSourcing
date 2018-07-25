@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2018_07_25_041615) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.integer "from_id"
+    t.integer "job_id"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "to_id"
+  end
+
   create_table "jobs", force: :cascade do |t|
     t.string "title"
     t.integer "user_id"
