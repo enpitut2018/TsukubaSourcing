@@ -14,6 +14,7 @@ class JobsController < ApplicationController
     @chat_list = Chat.where(job_id: @job.id)
     @employer = User.find_by(id: @job.user_id)
     @jobcomments = Jobcomment.all
+    @jobcomment = Jobcomment.new
 
   end
 
