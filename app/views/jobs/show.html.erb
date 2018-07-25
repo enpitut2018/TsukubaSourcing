@@ -16,7 +16,8 @@
   </div>
 </div>
 
-<% if current_user.id == @job.user_id %>
+<% if not user_signed_in? %>
+<% elsif current_user.id == @job.user_id %>
   <%= button_to "問い合わせ一覧", worker_list_job_path(@job), method: :get %>
 <% else %>
   <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
