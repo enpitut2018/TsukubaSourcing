@@ -1,35 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <span><%= @job.title %></span>
+          <div class="chip"><%= @job.user_id %></div>
+        </div>
+        <p><%= @job.description%></p>
+      </div>
+      <div class="card-action">
+        <%= link_to 'Edit', edit_job_path(@job) %>
+        <%= link_to 'Back', jobs_path %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @job.title %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @job.user_id %>
-</p>
-
-<p>
-  <strong>description:</strong>
-  <%= @job.description %>
-</p>
-
-<%= link_to 'Edit', edit_job_path(@job) %> |
-<%= link_to 'Back', jobs_path %>
-
-<% if current_user.id == @job.user_id %>
+<% if current_user.id == @job.user_id.to_s %>
   <%= button_to "問い合わせ一覧", worker_list_job_path(@job), method: :get %>
 <% else %>
   <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
+    <%= label "Message", :message %>
     <%= text_field_tag :message %>
     <%= hidden_field_tag :from_id, current_user.id %>
     <%= hidden_field_tag :to_id, @employer.id %>
-    <%= submit_tag "送信" %>
-    <% @chat_list.each do |chat| %>
-      <br>
-      <%= chat.from_id %>
-      <%= chat.message %>
-    <% end %>
+    <%= submit_tag "Send", :class=>"waves-effect waves-light btn" %>
+    <br />
+    <ul class="collection">
+    </li>
+      <% @chat_list.each do |chat| %>
+        <li class="collection-item">
+          <span class="title"><%= chat.created_at %></span>
+          <p><%= chat.message %></p>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
 <% end %>

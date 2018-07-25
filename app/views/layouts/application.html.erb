@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TsukubaScourcing</title>
+    <title>TsukubaSourcing</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Tsukuba Sourcing</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/jobs">Jobs</a></li>
+        <li><a href="/jobs/new">Add Job</a></li>
+        <% if user_signed_in? %>
+          <li><a href="#"><%= current_user[:name] %></a></li>
+          <li><a href="/users/sign_out">Sign Out</a></li>
+        <% else %>
+          <li><a href="/users/sign_up">Sign Up</a></li>
+          <li><a href="/users/sign_in">Sign In</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <% if user_signed_in? %>
-      <p>user: <%= current_user[:name] %></p>
-      <a href="/users/sign_out">sign out</a>
-    <% end %>
     <%= yield %>
+  </div>
   </body>
 </html>
