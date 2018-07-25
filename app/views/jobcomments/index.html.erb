@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jobcomments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Comment</th>
+      <th>Star</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jobcomments.each do |jobcomment| %>
+      <tr>
+        <td><%= jobcomment.comment %></td>
+        <td><%= jobcomment.star %></td>
+        <td><%= jobcomment.user %></td>
+        <td><%= link_to 'Show', jobcomment %></td>
+        <td><%= link_to 'Edit', edit_jobcomment_path(jobcomment) %></td>
+        <td><%= link_to 'Destroy', jobcomment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jobcomment', new_jobcomment_path %>
