@@ -3,9 +3,9 @@
 one:
   comment: MyText
   star: 1
-  user: one
+  user_id: 1
 
 two:
   comment: MyText
   star: 1
-  user: two
+  user_id: 1
