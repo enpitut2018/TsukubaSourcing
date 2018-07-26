@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
-  resources :comments
   get 'users/show'
-  resources :jobcomments
   root :to => 'jobs#index'
   namespace :jobs do
     post 'create_comment'
-    resources :evaluations
-  end
+    end
   resources :assigns
   devise_for :users
   resources :jobs do

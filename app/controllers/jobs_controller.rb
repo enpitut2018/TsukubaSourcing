@@ -65,22 +65,17 @@ class JobsController < ApplicationController
     end
   end
   def create_comment
-    @comment=Comment.new()
-    @comment.message=params.require(:message)
-    @comment.user_id=params.required(:user_id)
-    @comment.job_id=params.required(:job_id)
-    @comment.save()
+    pp = params.permit(:message, :user_id, :job_id)
+    pp[:visible] = true
+    Comment.create(pp)
     redirect_back fallback_location: root_path
 
   end
 
   def create_message
-    @chat = Chat.new()
-    @chat.message = params.require(:message)
-    @chat.from_id = params.require(:from_id)
-    @chat.to_id = params.require(:to_id)
-    @chat.job_id = @job.id
-    @chat.save()
+    pp = params.permit(:message, :from_id , :to_id)
+    pp[:job_id] = @job.id
+    Chat.create(pp)
     redirect_back fallback_location: root_path
   end
 
@@ -104,7 +99,6 @@ class JobsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])
-      @jobcomment = Jobcomment.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
