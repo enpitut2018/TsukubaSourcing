@@ -42,7 +42,7 @@ class JobsControllerTest < ActionDispatch::IntegrationTest
       post jobs_url, params: { job: { description: @job.description, title: @job.title, user_id: @job.user_id } }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to jobs_url
   end
 
   test "should show job" do
@@ -76,12 +76,12 @@ class JobsControllerTest < ActionDispatch::IntegrationTest
   test "should not update job with signed in another user" do
     signin(:two)
     patch job_url(@job), params: { job: { description: @job.description, title: @job.title, user_id: @job.user_id } }
-    assert_redirected_to root_path
+    assert_redirected_to jobs_url
   end
 
   test "should not update job without signed in" do
     patch job_url(@job), params: { job: { description: @job.description, title: @job.title, user_id: @job.user_id } }
-    assert_redirected_to root_path
+    assert_redirected_to jobs_url
   end
 
   test "should destroy job with signed in" do

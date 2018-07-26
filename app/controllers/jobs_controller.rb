@@ -47,8 +47,8 @@ class JobsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render :new }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+        format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully created. You don\'t have the permission to create it.' }
+        format.json { head :no_content }
       end
     end
   end
@@ -68,8 +68,8 @@ class JobsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render :new }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+        format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully updated. You don\'t have the permission to update it.' }
+        format.json { head :no_content }
       end
     end
   end
@@ -85,7 +85,7 @@ class JobsController < ApplicationController
       end
     else
       respond_to do |format|
-          format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully destroyed. You don\'t have the permission to delete it.' }
+        format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully destroyed. You don\'t have the permission to delete it.' }
         format.json { head :no_content }
       end
     end
