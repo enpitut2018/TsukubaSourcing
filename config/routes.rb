@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :jobcomments
   root :to => 'jobs#index'
+  namespace :jobs do
+    resources :evaluations
+  end
   resources :assigns
   devise_for :users, controllers: {
     sessions: 'users/sessions'
