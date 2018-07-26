@@ -17,14 +17,27 @@
         <td><%= job.user_id %></td>
         <td><%= job.description %></td>
         <td>
-          <%= button_to '参加', assigns_path, method: :create, params:{assign:{job_id: job.id, user_id: @currentUserId, status: 'new'}} %>
+          <%= button_to '参加',
+            assigns_path,
+            disabled: !user_signed_in?,
+            method: :create,
+            params:{assign:{job_id: job.id, user_id: @currentUserId, status: 'new'}},
+            class: "waves-effect waves-light btn"
+          %>
         </td>
         <td>
-          <%= button_to '完了', assign_path(5), method: :put, params:{assign:{status: 'complete'}} %>
+          <%= button_to '完了',
+            assign_path(5),
+            disabled: !user_signed_in?,
+            method: :put,
+            params:{assign:{status: 'complete'}},
+            class: "waves-effect waves-light btn"
+          %>
         </td>
         <td><%= link_to 'Show', job %></td>
-        <td><%= link_to 'Edit', edit_job_path(job) %></td>
-        <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% isOwner = user_signed_in? && (current_user.id == job.user.id) %>
+        <td><%= link_to_if isOwner, 'Edit', edit_job_path(job) %></td>
+        <td><%= link_to_if isOwner, 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
