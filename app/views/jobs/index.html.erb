@@ -16,24 +16,26 @@
         <td><%= job.title %></td>
         <td><%= job.user_id %></td>
         <td><%= job.description %></td>
+        <% assign = user_signed_in? && Assign.find_by(user_id: current_user.id, job_id: job.id) %>
+        <% if !user_signed_in? || assign == nil %>
         <td>
           <%= button_to '参加',
             assigns_path,
-            disabled: !user_signed_in?,
-            method: :create,
-            params:{assign:{job_id: job.id, user_id: @currentUserId, status: 'new'}},
-            class: "waves-effect waves-light btn"
+            method: :post,
+            params:{assign:{job_id: job.id, user_id: user_signed_in? ? current_user.id : -1, status: 'join'}},
+            class: "waves-effect waves-light btn " + (!user_signed_in? ? "disabled" : "")
           %>
         </td>
+        <% else %>
         <td>
           <%= button_to '完了',
-            assign_path(5),
-            disabled: !user_signed_in?,
+            assign_path(assign),
             method: :put,
             params:{assign:{status: 'complete'}},
-            class: "waves-effect waves-light btn"
+            class: "waves-effect waves-light btn " + (!user_signed_in? || assign.status == 'complete' ? "disabled" : "")
           %>
         </td>
+        <% end %>
         <td><%= link_to 'Show', job %></td>
         <% isOwner = user_signed_in? && (current_user.id == job.user.id) %>
         <td><%= link_to_if isOwner, 'Edit', edit_job_path(job) %></td>

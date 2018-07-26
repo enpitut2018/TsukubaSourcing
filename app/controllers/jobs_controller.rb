@@ -4,7 +4,6 @@ class JobsController < ApplicationController
   # GET /jobs
   # GET /jobs.json
   def index
-    @currentUserId = 0
     @jobs = Job.all
     @users = User.all
   end
