@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   get 'users/show'
   root :to => 'jobs#index'
   resources :assigns

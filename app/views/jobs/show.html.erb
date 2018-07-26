@@ -38,3 +38,31 @@
     </ul>
   <% end %>
 <% end %>
+
+仕事に関するコメント
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Message</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <% if comment.visible==true && comment.job_id==@job.id %>
+        <tr>
+          <td><%= comment.user_id %></td>
+          <td><%= comment.message %></td>
+          <td><%= link_to 'Show', comment %></td>
+          <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
+          <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

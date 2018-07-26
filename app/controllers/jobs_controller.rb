@@ -13,6 +13,7 @@ class JobsController < ApplicationController
   def show
     @employer = @job.user
     @chat_list = user_signed_in? ? select_chats(current_user.id, @employer) : nil
+    @comments = Comment.all
   end
 
   # GET /jobs/new
