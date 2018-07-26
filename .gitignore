@@ -4,12 +4,14 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+
+#bundle/ruby
+vendor/bundle
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+# Ignore the default database.
+/db/migrate/*
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -28,3 +30,5 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/Gemfile

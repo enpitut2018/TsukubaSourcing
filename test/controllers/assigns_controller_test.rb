@@ -2,7 +2,11 @@ require 'test_helper'
 
 class AssignsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @assign = assigns(:one)
+    # assignsが予約語なので手動
+    User.new(name: "assign_test_user", email: "assign_test_user@example.com", password: "password").save
+    @user = User.last
+    @job = Job.create(title: "Mystring", user_id: @user.id, description: "Mystring")
+    @assign = Assign.create(job_id: @job.id, user_id: @user.id, status: "Mystring") #assigns(:one)
   end
 
   test "should get index" do

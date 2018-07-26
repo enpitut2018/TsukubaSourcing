@@ -1,0 +1,7 @@
+<h1>ワーカーリスト</h1>
+<% @workers.each do |worker| %>
+    <br>
+    <%= worker.email %>
+    <%= worker.id %>
+    <%= button_to "チャット", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
+<% end %>
