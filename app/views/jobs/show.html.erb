@@ -31,7 +31,7 @@
     </li>
       <% @chat_list.each do |chat| %>
         <li class="collection-item">
-          <span class="title"><%= chat.created_at %></span>
+          <span class="title"><%= chat.created_at.to_s.slice(0,19) %></span>
           <p><%= chat.message %></p>
         </li>
       <% end %>
