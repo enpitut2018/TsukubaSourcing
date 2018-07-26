@@ -15,8 +15,8 @@
       <a href="/" class="brand-logo">Tsukuba Sourcing</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/jobs">Jobs</a></li>
-        <li><a href="/jobs/new">Add Job</a></li>
         <% if user_signed_in? %>
+          <li><a href="/jobs/new">Add Job</a></li>
           <li><%= link_to current_user[:name], users_show_path(current_user[:id]) %></li>
           <li><a href="/users/sign_out">Sign Out</a></li>
         <% else %>

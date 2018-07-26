@@ -17,11 +17,17 @@ class JobsController < ApplicationController
 
   # GET /jobs/new
   def new
+    if not user_signed_in?
+      redirect_to :action => "index"
+    end
     @job = Job.new
   end
 
   # GET /jobs/1/edit
   def edit
+    if not user_signed_in? or current_user.id != @job.user_id
+      redirect_to :action => "index"
+    end
   end
 
   # POST /jobs
@@ -29,13 +35,20 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
 
-    respond_to do |format|
-      if @job.save
-        format.html { redirect_to @job, notice: 'Job was successfully created.' }
-        format.json { render :show, status: :created, location: @job }
-      else
-        format.html { render :new }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+    if user_signed_in? and current_user.id == @job.user_id
+      respond_to do |format|
+        if @job.save
+          format.html { redirect_to @job, notice: 'Job was successfully created.' }
+          format.json { render :show, status: :created, location: @job }
+        else
+          format.html { render :new }
+          format.json { render json: @job.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully created. You don\'t have the permission to create it.' }
+        format.json { head :no_content }
       end
     end
   end
@@ -43,13 +56,20 @@ class JobsController < ApplicationController
   # PATCH/PUT /jobs/1
   # PATCH/PUT /jobs/1.json
   def update
-    respond_to do |format|
-      if @job.update(job_params)
-        format.html { redirect_to @job, notice: 'Job was successfully updated.' }
-        format.json { render :show, status: :ok, location: @job }
-      else
-        format.html { render :edit }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+    if user_signed_in? and current_user.id == @job.user_id
+      respond_to do |format|
+        if @job.update(job_params)
+          format.html { redirect_to @job, notice: 'Job was successfully updated.' }
+          format.json { render :show, status: :ok, location: @job }
+        else
+          format.html { render :edit }
+          format.json { render json: @job.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully updated. You don\'t have the permission to update it.' }
+        format.json { head :no_content }
       end
     end
   end
@@ -57,10 +77,17 @@ class JobsController < ApplicationController
   # DELETE /jobs/1
   # DELETE /jobs/1.json
   def destroy
-    @job.destroy
-    respond_to do |format|
-      format.html { redirect_to jobs_url, notice: 'Job was successfully destroyed.' }
-      format.json { head :no_content }
+    if user_signed_in? and current_user.id == @job.user_id
+      @job.destroy
+      respond_to do |format|
+        format.html { redirect_to jobs_url, notice: 'Job was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to jobs_url, notice: 'Job was unsuccessfully destroyed. You don\'t have the permission to delete it.' }
+        format.json { head :no_content }
+      end
     end
   end
 
