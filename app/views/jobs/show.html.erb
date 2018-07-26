@@ -52,7 +52,7 @@
 
   <tbody>
     <% @comments.each do |comment| %>
-      <% if comment.visible==true && comment.job_id==@job.id %>
+      <% if comment.visible==true %>
         <tr>
           <td><%= comment.user_id %></td>
           <td><%= comment.message %></td>
