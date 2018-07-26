@@ -32,7 +32,6 @@
     <%= submit_tag "Send", :class=>"waves-effect waves-light btn" %>
     <br />
     <ul class="collection">
-    </li>
       <% @chat_list.each do |chat| %>
         <li class="collection-item">
           <span class="title"><%= chat.created_at.to_s.slice(0,19) %></span>

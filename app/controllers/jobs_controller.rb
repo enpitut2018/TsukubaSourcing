@@ -132,6 +132,6 @@ class JobsController < ApplicationController
       p Chat.first
       @chat_list = @job.chats
       @chat_list = @chat_list.where(from_id: user1,to_id: user2).or(@chat_list.where(from_id: user2,to_id: user1))
-      @chat_list.reorder("created_at DESC")
+      @chat_list.reorder("created_at")
     end
 end
