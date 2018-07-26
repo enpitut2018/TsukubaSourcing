@@ -38,9 +38,10 @@
         </td>
         <% end %>
         <td><%= link_to 'Show', job %></td>
-        <% isOwner = user_signed_in? && (current_user.id == job.user.id) %>
-        <td><%= link_to_if isOwner, 'Edit', edit_job_path(job) %></td>
-        <td><%= link_to_if isOwner, 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if user_signed_in? && (current_user.id == job.user.id) %>
+        <td><%= link_to 'Edit', edit_job_path(job) %></td>
+        <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
