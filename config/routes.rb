@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :jobcomments
   root :to => 'jobs#index'
   namespace :jobs do
+    post 'create_comment'
     resources :evaluations
   end
   resources :assigns

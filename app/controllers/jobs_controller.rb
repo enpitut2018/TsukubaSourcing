@@ -64,6 +64,15 @@ class JobsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def create_comment
+    @comment=Comment.new()
+    @comment.message=params.require(:message)
+    @comment.user_id=params.required(:user_id)
+    @comment.job_id=params.required(:job_id)
+    @comment.save()
+    redirect_back fallback_location: root_path
+
+  end
 
   def create_message
     @chat = Chat.new()
