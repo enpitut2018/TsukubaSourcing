@@ -24,7 +24,7 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
       post assigns_url, params: { assign: { job_id: @assign.job_id, status: @assign.status, user_id: @assign.user_id } }
     end
 
-    assert_redirected_to assign_url(Assign.last)
+    assert_redirected_to job_url(Assign.last.job)
   end
 
   test "should show assign" do
@@ -38,8 +38,9 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update assign" do
+    get root_path
     patch assign_url(@assign), params: { assign: { job_id: @assign.job_id, status: @assign.status, user_id: @assign.user_id } }
-    assert_redirected_to assign_url(@assign)
+    assert_redirected_to root_path
   end
 
   test "should destroy assign" do
