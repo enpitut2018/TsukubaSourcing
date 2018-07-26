@@ -1,11 +1,18 @@
+<%= link_to '<<Back', :back %>
 <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
-<%= text_field_tag :message %>
-<%= hidden_field_tag :from_id, current_user.id %>
-<%= hidden_field_tag :to_id, @worker_id %>
-<%= submit_tag "送信" %>
-<% @chat_list.each do |chat| %>
-    <br>
-    <%= chat.from_id %>
-    <%= chat.message %>
-<% end %>
-<% end %>
+    <%= label "Message", :message %>
+    <%= text_field_tag :message %>
+    <%= hidden_field_tag :from_id, current_user.id %>
+    <%= hidden_field_tag :to_id, @worker_id %>
+    <%= submit_tag "Send", :class=>"waves-effect waves-light btn" %>
+    <br />
+    <ul class="collection">
+      <% @chat_list.each do |chat| %>
+        <li class="collection-item">
+          <span class="title"><%= "#{User.find_by(id: chat.from_id).name.to_s} #{chat.created_at}" %></span>
+          <p><%= chat.message %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+

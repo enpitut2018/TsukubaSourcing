@@ -1,7 +1,7 @@
-<h1>ワーカーリスト</h1>
+<h1>Worker List</h1>
+<%= link_to '<<Back', :back %>
 <% @workers.each do |worker| %>
     <br>
-    <%= worker.email %>
-    <%= worker.id %>
-    <%= button_to "チャット", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
+    <%= worker.name %>
+    <%= button_to "chat", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
 <% end %>
