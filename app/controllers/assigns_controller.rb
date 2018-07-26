@@ -28,7 +28,7 @@ class AssignsController < ApplicationController
 
     respond_to do |format|
       if @assign.save
-        format.html { redirect_to @assign, notice: 'Assign was successfully created.' }
+        format.html { redirect_to @assign.job, notice: 'Assign was successfully created.' }
         format.json { render :show, status: :created, location: @assign }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class AssignsController < ApplicationController
   def update
     respond_to do |format|
       if @assign.update(assign_params)
-        format.html { redirect_to @assign, notice: 'Assign was successfully updated.' }
+        format.html { redirect_back fallback_location: root_path, notice: 'Assign was successfully updated.' }
         format.json { render :show, status: :ok, location: @assign }
       else
         format.html { render :edit }

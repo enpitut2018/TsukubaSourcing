@@ -16,9 +16,31 @@
         <td><%= job.title %></td>
         <td><%= job.user_id %></td>
         <td><%= job.description %></td>
+        <% assign = user_signed_in? && Assign.find_by(user_id: current_user.id, job_id: job.id) %>
+        <% if !user_signed_in? || assign == nil %>
+        <td>
+          <%= button_to '参加',
+            assigns_path,
+            method: :post,
+            params:{assign:{job_id: job.id, user_id: user_signed_in? ? current_user.id : -1, status: 'join'}},
+            class: "waves-effect waves-light btn " + (!user_signed_in? ? "disabled" : ""),
+            id: :join_form
+          %>
+        </td>
+        <% else %>
+        <td>
+          <%= button_to (user_signed_in? && assign.status == 'complete') ? '完了済み' : '完了',
+            assign_path(assign),
+            method: :put,
+            params:{assign:{status: 'complete'}},
+            class: "red lighten-1 waves-effect waves-light btn " + (!user_signed_in? || assign.status == 'complete' ? "disabled" : "")
+          %>
+        </td>
+        <% end %>
         <td><%= link_to 'Show', job %></td>
-        <td><%= link_to 'Edit', edit_job_path(job) %></td>
-        <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% isOwner = user_signed_in? && (current_user.id == job.user.id) %>
+        <td><%= link_to_if isOwner, 'Edit', edit_job_path(job) %></td>
+        <td><%= link_to_if isOwner, 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
