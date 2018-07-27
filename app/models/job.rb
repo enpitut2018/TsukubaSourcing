@@ -3,4 +3,5 @@ class Job < ApplicationRecord
   has_many :assigns
   has_many :chats
   has_many :comments
+  has_many :reviews
 end
