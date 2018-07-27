@@ -1,8 +1,8 @@
-<h1>Worker List</h1>
+<h1>お手伝いさんの一覧</h1>
 <% @workers.each do |worker| %>
     <br>
     <%= worker.name %>
-    <%= button_to "chat", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
+    <%= button_to "チャット開始", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
 <% end %>
 
-<%= link_to 'Back',:back %>
+<%= link_to '戻る',:back %>
