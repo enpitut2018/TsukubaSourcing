@@ -47,12 +47,14 @@
               <tr>
                 <td><%= comment.user_id %></td>
                 <td><%= comment.message %></td>
-                <td>
-                <%= form_tag({ :controller => 'jobs', :action => 'hide_comment'},{ :method => :post}) do %>
-                  <%= hidden_field_tag :comment_id,comment.id %>
-                  <%= submit_tag "取り消し" %>
-                <% end %>
-                </td>
+                <% if(comment.user_id==current_user.id) %>
+                  <td>
+                  <%= form_tag({ :controller => 'jobs', :action => 'hide_comment'},{ :method => :post}) do %>
+                    <%= hidden_field_tag :comment_id,comment.id %>
+                    <%= submit_tag "取り消し" %>
+                  <% end %>
+                  </td>
+                <% end%>
                 <td><%#= link_to 'Show', comment %></td>
                 <td><%#= link_to 'Edit', edit_comment_path(comment) %></td>
                 <td><%#= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
