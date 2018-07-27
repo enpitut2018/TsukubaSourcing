@@ -101,7 +101,6 @@
           <% @users.zip(@assigns).each do |user, assign| %>
             <tr>
               <td><%= user.name %></td>
-              <td><%= user.id %></td>
               <td>
                 <% if assign.status == 'applying' %>
                   <%= button_to '参加承認',

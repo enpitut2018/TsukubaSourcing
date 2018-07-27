@@ -53,12 +53,18 @@ class AssignsController < ApplicationController
   # PATCH/PUT /assigns/1.json
   def update
     status = assign_params[:status]
-    if (status == 'applying' && (current_user.id == @assign.user_id    )) ||
-       (status == 'join'     && (current_user.id == @assign.job.user_id)) ||
-       (status == 'complete' && (current_user.id == @assign.job.user_id))
+    isWorker = current_user.id == @assign.user_id
+    isOwner = current_user.id == @assign.job.user_id
+    if (status == 'applying' && isWorker) ||
+       (status == 'join'     && isOwner) ||
+       (status == 'complete' && isOwner)
       respond_to do |format|
         if @assign.update(assign_params)
-          format.html { redirect_back fallback_location: root_path }
+          if isOwner
+            format.html { redirect_to "/jobs/" + @assign.job.id.to_s + "#userlist"}
+          else
+            format.html { redirect_back fallback_location: root_path }
+          end
           format.json { render :show, status: :ok, location: @assign }
         else
           format.html { redirect_to root_path }
