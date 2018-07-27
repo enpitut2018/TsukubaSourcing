@@ -21,12 +21,32 @@
       <input name="job[user_id]" type="hidden" value=<%= current_user.id %>>
     <% end %>
   </div>
-
+ 
   <div class="field">
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.number_field :description %>
   </div>
 
+  <div class="field">
+    <%= form.label :reward %>
+    <%= form.text_field :reward%>
+  </div>
+  
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.time_field :time%>
+  </div>
+  
+  <div class="field">
+    <%= form.label :limit_date %>
+    <%= form.date_field :limit_date %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :limit_time %>
+    <%= form.time_field :limit_time %>
+  </div>
+  
   <div class="actions">
     <%= form.submit :class=>"waves-effect waves-light btn" %>
   </div>
