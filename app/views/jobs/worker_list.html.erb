@@ -1,10 +1,11 @@
 <h1>Worker List</h1>
 
 <%= link_to '<<Back', :back %>
-
+<br/>
 <% @workers.each do |worker| %>
-    <br>
+  <span>
     <%= worker.name %>
-    <%= button_to "chat", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
+    <%= button_to "chat", chat_job_path(@job), method: :get, params: {worker_id: worker.id}, :class=> "waves-effect waves-light btn" %>
+  </span>
 <% end %>
 
