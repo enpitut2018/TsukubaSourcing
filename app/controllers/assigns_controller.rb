@@ -1,5 +1,5 @@
 class AssignsController < ApplicationController
-  before_action :set_assign, only: [:show, :edit, :update, :destroy]
+  before_action :set_assign, only: [:show, :edit, :update, :destroy, :review]
 
   # GET /assigns
   # GET /assigns.json

@@ -1,2 +1,21 @@
 <h1>Assigns#review</h1>
 <p>Find me in app/views/assigns/review.html.erb</p>
+
+<%= form_for :review, url: reviews_path do |form| %>
+  <div class="field">
+    <%= form.label :rating %>
+    <%= form.number_field :rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :comment %>
+    <%= form.text_area :comment %>
+  </div>
+
+  <%= form.hidden_field :job_id, value: @assign.job.id %>
+  <%= form.hidden_field :user_id, value: @assign.user.id %>
+
+  <div class="actions">
+    <%= form.submit "送信" %>
+  </div>
+<% end %>

@@ -52,5 +52,6 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get review" do
-    get assigns_review_url
+    get review_assign_url(@assign)
+  end
 end
