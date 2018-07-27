@@ -19,6 +19,6 @@ class JoinAndCompleteTest < ActionDispatch::IntegrationTest
   test "complete" do
     get root_path
     put assign_path(Assign.last), params: {assign:{status: 'complete'}}
-    assert_redirected_to root_path
+    assert_redirected_to "/jobs/" + Assign.last.job_id.to_s + "#userlist"
   end
 end
