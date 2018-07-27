@@ -80,6 +80,7 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get review" do
+    @assign = Assign.first
     get review_assign_url(@assign)
   end
 end
