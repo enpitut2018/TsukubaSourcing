@@ -14,14 +14,14 @@
     <div class="nav-wrapper">
       <a href="/" class="brand-logo">Tsukuba Sourcing</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/jobs">Jobs</a></li>
+        <li><a href="/jobs">仕事一覧</a></li>
         <% if user_signed_in? %>
-          <li><a href="/jobs/new">Add Job</a></li>
+          <li><a href="/jobs/new">仕事をお願いする</a></li>
           <li><%= link_to current_user[:name], users_show_path(current_user[:id]) %></li>
-          <li><a href="/users/sign_out">Sign Out</a></li>
+          <li><a href="/users/sign_out">ログアウト</a></li>
         <% else %>
-          <li><a href="/users/sign_up">Sign Up</a></li>
-          <li><a href="/users/sign_in">Sign In</a></li>
+          <li><a href="/users/sign_up">ログイン</a></li>
+          <li><a href="/users/sign_in">新規登録</a></li>
         <% end %>
       </ul>
     </div>
