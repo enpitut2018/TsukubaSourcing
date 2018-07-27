@@ -91,7 +91,28 @@
       <% end %>
     </div>
     <div id="userlist">
-      User List
+      <% p Assign.where(job_id: @job.id).select(:user_id) %>
+      <% @users = User.where(id: Assign.where(job_id: @job.id).select(:user_id)) %>
+      <% if @users != nil %>
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%= user.id %></td>
+                <td>link</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
     </div>
   </div>
 </div>
