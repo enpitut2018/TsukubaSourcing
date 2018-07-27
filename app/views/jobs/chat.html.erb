@@ -3,7 +3,7 @@
   <% @chat_list.each do |chat| %>
     <% side ="text-align:"+ (current_user.id==chat.from_id ? "right" : "left" ) %>
     <li class="collection-item" style= <%= side %> >
-      <span class="title" ><%= "#{User.find_by(id: chat.from_id).name.to_s} #{chat.created_at}" %></span><br/>
+      <span class="title" ><%= "#{User.find_by(id: chat.from_id).name.to_s} #{chat.created_at.to_s.slice(0,19)}" %></span><br/>
       <span ><%= chat.message %></span>
     </li>
   <% end %>
