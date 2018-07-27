@@ -6,7 +6,12 @@ class AssignsController < ApplicationController
   # POST /assigns.json
   def create
     @assign = Assign.new(assign_params)
-    if (job = Job.find_by(id: params[:assign][:job_id])) != nil and job.user_id == @assign.user_id
+    if current_user.id != @assign.user_id
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: '参加する権限がありません' }
+        format.json { head :no_content }
+      end
+    elsif (job = Job.find_by(id: params[:assign][:job_id])) != nil and job.user_id == @assign.user_id
       respond_to do |format|
         format.html { redirect_to root_path, notice: '自分の仕事には参加できません' }
         format.json { head :no_content }

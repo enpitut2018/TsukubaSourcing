@@ -13,6 +13,15 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
     @assign = Assign.create(job_id: @job.id, user_id: users(assign_user).id, status: "Mystatus")
   end
 
+  test "should create assign" do
+    signin_and_assign(signin_user: :two, assign_user: :two)
+
+    assert_difference('Assign.count') do
+      post assigns_url, params: { assign: { job_id: @assign.job_id, status: @assign.status, user_id: @assign.user_id } }
+    end
+
+    assert_redirected_to job_url(Assign.last.job)
+  end
 
   test "should not create assign my job" do
     signin_and_assign(signin_user: :one, assign_user: :one)
@@ -24,14 +33,14 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
-  test "should create assign with signed in another user" do
+  test "should not create assign with signed in another user" do
     signin_and_assign(signin_user: :two, assign_user: :one)
 
-    assert_difference('Assign.count') do
+    assert_no_difference('Assign.count') do
       post assigns_url, params: { assign: { job_id: @assign.job_id, status: @assign.status, user_id: @assign.user_id } }
     end
 
-    assert_redirected_to job_url(Assign.last.job)
+    assert_redirected_to root_path
   end
 
   test "should update assign" do
