@@ -31,21 +31,21 @@
             assign_path(assign),
             method: :put,
             params:{assign:{status: ''}},
-            class: "red lighten-1 waves-effect waves-light btn disabled"
+            class: "waves-effect waves-light btn disabled"
           %>
         <% elsif assign.status == 'join' %>
           <%= button_to '参加中',
             assign_path(assign),
             method: :put,
             params:{assign:{status: ''}},
-            class: "red lighten-1 waves-effect waves-light btn disabled"
+            class: "waves-effect waves-light btn disabled"
           %>
         <% elsif assign.status == 'complete' %>
           <%= button_to '完了済み',
             assign_path(assign),
             method: :put,
             params:{assign:{status: ''}},
-            class: "red lighten-1 waves-effect waves-light btn disabled"
+            class: "waves-effect waves-light btn disabled"
           %>
         <% end %>
         </td>

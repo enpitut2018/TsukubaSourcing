@@ -52,12 +52,10 @@ class AssignsController < ApplicationController
   # PATCH/PUT /assigns/1
   # PATCH/PUT /assigns/1.json
   def update
-    if current_user.id != @assign.user_id
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: '変更する権限がありません' }
-        format.json { head :no_content }
-      end
-    else
+    status = assign_params[:status]
+    if (status == 'applying' && (current_user.id == @assign.user_id    )) ||
+       (status == 'join'     && (current_user.id == @assign.job.user_id)) ||
+       (status == 'complete' && (current_user.id == @assign.job.user_id))
       respond_to do |format|
         if @assign.update(assign_params)
           format.html { redirect_back fallback_location: root_path }
@@ -66,6 +64,11 @@ class AssignsController < ApplicationController
           format.html { redirect_to root_path }
           format.json { render json: @assign.errors, status: :unprocessable_entity }
         end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: '変更する権限がありません' }
+        format.json { head :no_content }
       end
     end
   end
