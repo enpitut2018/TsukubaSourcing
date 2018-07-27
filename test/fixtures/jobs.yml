@@ -2,12 +2,12 @@
 
 one:
   title: MyString
-  user: test_user
+  user: one
   description: MyString
 
 two:
   title: MyString
-  user: test_user
+  user: two
   description: MyString
 
 test_job:

@@ -5,8 +5,6 @@ services:
 
 bundler_args: "--without production --jobs=3"
 
-cache: bundler
-
 before_script:
   - cp config/database.yml.travis config/database.yml
   - bin/rails db:create

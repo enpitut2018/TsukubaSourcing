@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'users/show'
   root :to => 'jobs#index'
+  namespace :jobs do
+    post 'create_comment'
+    end
   resources :assigns
   devise_for :users
   resources :jobs do
