@@ -1,6 +1,26 @@
 class AssignsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_assign, only: [:update, :destroy]
+  before_action :set_assign, only: [:show, :edit, :update, :destroy, :review]
+
+  # GET /assigns
+  # GET /assigns.json
+  def index
+    @assigns = Assign.all
+  end
+
+  # GET /assigns/1
+  # GET /assigns/1.json
+  def show
+  end
+
+  # GET /assigns/new
+  def new
+    @assign = Assign.new
+  end
+
+  # GET /assigns/1/edit
+  def edit
+  end
 
   # POST /assigns
   # POST /assigns.json
@@ -65,6 +85,10 @@ class AssignsController < ApplicationController
         format.json { head :no_content }
       end
     end
+  end
+
+  def review
+
   end
 
   private

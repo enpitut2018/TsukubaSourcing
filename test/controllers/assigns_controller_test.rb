@@ -78,4 +78,9 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
   end
+
+  test "should get review" do
+    @assign = Assign.first
+    get review_assign_url(@assign)
+  end
 end
