@@ -30,22 +30,12 @@
   </div>
   <div class="card-content grey lighten-4">
     <div id="comment">
-<<<<<<< HEAD
-
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Message</th>
-            <th style="text-align:right">Date</th>
-=======
       <table>
         <thead>
           <tr>
             <th>ユーザー名</th>
             <th>メッセージ</th>
-            <th colspan="3"></th>
->>>>>>> master
+            <th style="text-align:right">日付</th>
           </tr>
         </thead>
         <tbody>
@@ -54,13 +44,7 @@
               <tr>
                 <td><%= "#{User.find_by(id: comment.user_id).name.to_s}" %></td>
                 <td><%= comment.message %></td>
-<<<<<<< HEAD
                 <td style="text-align:right"><%= comment.created_at.to_s.slice(0,19) %></td>
-                <!--    <td><%#= link_to 'Show', comment %></td>
-                <td><%#= link_to 'Edit', edit_comment_path(comment) %></td>
-                <td><%#= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
-=======
->>>>>>> master
               </tr>
             <% end %>
           <% end %>
@@ -70,17 +54,10 @@
 
       <% if user_signed_in? %>
       <%= form_tag({ :controller => 'jobs', :action => 'create_comment'},{ :method => :post}) do %>
-<<<<<<< HEAD
-      <%= text_field_tag :message %>
-      <%= hidden_field_tag :user_id, current_user.id %>
-      <%= hidden_field_tag :job_id, @job.id %>
-      <%= submit_tag "Send", :class=> "waves-effect waves-light btn" %>
-=======
         <%= text_field_tag :message %>
         <%= hidden_field_tag :user_id, current_user.id %>
         <%= hidden_field_tag :job_id, @job.id %>
         <%= submit_tag "送信", :class=>"waves-effect waves-light btn" %>
->>>>>>> master
       <% end %>
       <% end %>
     </div>
