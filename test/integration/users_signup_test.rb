@@ -1,7 +1,13 @@
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
-  test "invalid signup information" do
+
+  def setup
+    @user = users(:one)
+  end
+
+  test "invalid signup 
+    information" do
     get '/users/sign_up'
     assert_no_difference 'User.count' do
       post '/users/', params: { user: { name:  "",
@@ -22,5 +28,17 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'jobs/index'
+  end
+
+  test "valid sign_in information" do
+    get '/users/sign_in'
+    post '/users/', params: {session: {email:"user1@example.com",password:"password"}}
+    assert_response :success    
+  end
+
+  test "invalid sign_in information" do
+    get '/users/sign_in'
+    post '/users/', params: {session: {email:"",password:""}}
+    assert_template "devise/registrations/new"
   end
 end
