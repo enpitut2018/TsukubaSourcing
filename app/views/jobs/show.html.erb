@@ -91,8 +91,6 @@
       <% end %>
     </div>
     <div id="userlist">
-      <% p Assign.where(job_id: @job.id).select(:user_id) %>
-      <% @users = User.where(id: Assign.where(job_id: @job.id).select(:user_id)) %>
       <% if @users != nil %>
         <table>
           <thead>
@@ -103,11 +101,11 @@
           </thead>
 
           <tbody>
-            <% @users.each do |user| %>
+            <% @users.zip(@assigns).each do |user, assign| %>
               <tr>
                 <td><%= user.name %></td>
                 <td><%= user.id %></td>
-                <td>link</td>
+                <td><%= link_to "レビュー", review_assign_path(assign) %></td>
               </tr>
             <% end %>
           </tbody>

@@ -14,6 +14,8 @@ class JobsController < ApplicationController
     @employer = @job.user
     @chat_list = user_signed_in? ? select_chats(current_user.id, @employer) : nil
     @comments = @job.comments
+    @users = User.where(id: Assign.where(job_id: @job.id).select(:user_id))
+    @assigns = Assign.where(job_id: @job.id)
   end
 
   # GET /jobs/new

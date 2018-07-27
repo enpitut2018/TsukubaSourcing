@@ -50,4 +50,7 @@ class AssignsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to assigns_url
   end
+
+  test "should get review" do
+    get assigns_review_url
 end
