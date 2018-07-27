@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
+  resources :reviews
   get 'users/show'
   root :to => 'jobs#index'
   namespace :jobs do
     post 'create_comment'
     end
-  resources :assigns
+  resources :assigns do
+    member do
+      get 'review'
+    end
+  end
   devise_for :users
   resources :jobs do
     member do
