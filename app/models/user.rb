@@ -9,5 +9,5 @@ class User < ApplicationRecord
   has_many :to_chats, class_name: :Chat, foreign_key: :to_id
   has_many :comments
   validates :name, presence: true, length: {maximum: 50}
-
+  validates :email, presence: true, uniqueness: true
 end
