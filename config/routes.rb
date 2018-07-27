@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/show'
   root :to => 'jobs#index'
   namespace :jobs do
+    post 'hide_comment'
     post 'create_comment'
     end
   resources :assigns

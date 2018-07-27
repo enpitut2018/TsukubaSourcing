@@ -98,6 +98,14 @@ class JobsController < ApplicationController
     redirect_back fallback_location: root_path
 
   end
+  
+  def hide_comment
+    
+    @comment=Comment.find(params[:comment_id])
+    @comment.visible=false
+    @comment.update(visible:false)
+    redirect_back fallback_location: root_path
+  end
 
   def create_message
     pp = params.permit(:message, :from_id , :to_id)
