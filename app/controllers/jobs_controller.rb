@@ -13,6 +13,7 @@ class JobsController < ApplicationController
   def show
     @employer = @job.user
     @chat_list = user_signed_in? ? select_chats(current_user.id, @employer) : nil
+    @comments = @job.comments
   end
 
   # GET /jobs/new
@@ -90,14 +91,18 @@ class JobsController < ApplicationController
       end
     end
   end
+  def create_comment
+    pp = params.permit(:message, :user_id, :job_id)
+    pp[:visible] = true
+    Comment.create(pp)
+    redirect_back fallback_location: root_path
+
+  end
 
   def create_message
-    @chat = Chat.new()
-    @chat.message = params.require(:message)
-    @chat.from_id = params.require(:from_id)
-    @chat.to_id = params.require(:to_id)
-    @chat.job_id = @job.id
-    @chat.save()
+    pp = params.permit(:message, :from_id , :to_id)
+    pp[:job_id] = @job.id
+    Chat.create(pp)
     redirect_back fallback_location: root_path
   end
 
