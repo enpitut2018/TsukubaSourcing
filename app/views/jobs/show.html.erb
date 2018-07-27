@@ -25,7 +25,9 @@
     <ul class="tabs tabs-fixed-width">
       <li class="tab"><a class="active" href="#comment">Comment</a></li>
       <li class="tab"><a href="#chat">Chat</a></li>
-      <li class="tab"><a href="#userlist">UserList</a></li>
+      <% if @users != nil && current_user == @employer %>
+        <li class="tab"><a href="#userlist">UserList</a></li>
+      <% end %>
     </ul>
   </div>
   <div class="card-content grey lighten-4">
@@ -91,26 +93,24 @@
       <% end %>
     </div>
     <div id="userlist">
-      <% if @users != nil %>
-        <table>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th colspan="3"></th>
-            </tr>
-          </thead>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-          <tbody>
-            <% @users.zip(@assigns).each do |user, assign| %>
-              <tr>
-                <td><%= user.name %></td>
-                <td><%= user.id %></td>
-                <td><%= link_to "レビュー", review_assign_path(assign) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
+        <tbody>
+          <% @users.zip(@assigns).each do |user, assign| %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.id %></td>
+              <td><%= link_to "レビュー", review_assign_path(assign) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
