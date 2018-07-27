@@ -19,20 +19,21 @@
 <% elsif current_user.id == @job.user_id %>
   <%= button_to "問い合わせ一覧", worker_list_job_path(@job), method: :get %>
 <% else %>
+  <ul class="collection">
+      <% @chat_list.each do |chat| %>
+        <% side ="text-align:"+ (current_user.id==chat.from_id ? "right" : "left" ) %>
+        <li class="collection-item" style= <%= side %> >
+          <span class="title" ><%= "#{User.find_by(id: chat.from_id).name.to_s} #{chat.created_at}" %></span><br/>
+          <span ><%= chat.message %></span>
+        </li>
+      <% end %>
+  </ul>
+  <br />
   <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
     <%= label "Message", :message %>
     <%= text_field_tag :message %>
     <%= hidden_field_tag :from_id, current_user.id %>
     <%= hidden_field_tag :to_id, @employer.id %>
     <%= submit_tag "Send", :class=>"waves-effect waves-light btn" %>
-    <br />
-    <ul class="collection">
-      <% @chat_list.each do |chat| %>
-        <li class="collection-item">
-          <span class="title"><%= "#{User.find_by(id: chat.from_id).name.to_s} #{chat.created_at}" %></span>
-          <p><%= chat.message %></p>
-        </li>
-      <% end %>
-    </ul>
   <% end %>
 <% end %>
