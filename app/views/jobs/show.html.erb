@@ -45,7 +45,7 @@
           <% @comments.each do |comment| %>
             <% if comment.visible==true %>
               <tr>
-                <td><%= comment.user_id %></td>
+                <td><%= User.find_by(id: comment.user_id).name %></td>
                 <td><%= comment.message %></td>
                 <% if(comment.user_id==current_user.id) %>
                   <td>
