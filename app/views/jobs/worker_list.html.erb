@@ -1,8 +1,27 @@
 <h1>お手伝いさんの一覧</h1>
-<% @workers.each do |worker| %>
-    <br>
-    <%= worker.name %>
-    <%= button_to "チャット開始", chat_job_path(@job), method: :get, params: {worker_id: worker.id} %>
-<% end %>
 
-<%= link_to '戻る',:back %>
+<%= link_to '<< 戻る', :back %>
+
+<table>
+  <thead>
+    <tr>
+      <th>ユーザー名</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @workers.each do |worker| %>
+      <tr>
+        <td><%= worker.name %></td>
+        <td>
+          <%=
+            button_to "チャット開始",
+            chat_job_path(@job),
+            class: "waves-effect waves-light btn",
+            method: :get, params: {worker_id: worker.id}
+          %>
+         </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,3 +1,4 @@
+<%= link_to '<< 戻る', jobs_path %>
 <div class="row">
   <div class="col s12 m6">
     <div class="card">
@@ -14,67 +15,76 @@
           <%= link_to '編集', edit_job_path(@job) %>
         <% end %>
         <% end %>
-        <%= link_to '戻る', jobs_path %>
       </div>
     </div>
   </div>
 </div>
 
-<% if not user_signed_in? %>
-<% elsif current_user.id == @job.user_id %>
-  <%= button_to "問い合わせ一覧", worker_list_job_path(@job), method: :get %>
-<% else %>
-  <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
-    <%= label "メッセージ一覧", :message %>
-    <%= text_field_tag :message %>
-    <%= hidden_field_tag :from_id, current_user.id %>
-    <%= hidden_field_tag :to_id, @employer.id %>
-    <%= submit_tag "送信", :class=>"waves-effect waves-light btn" %>
-    <br />
-    <ul class="collection">
-      <% @chat_list.each do |chat| %>
-        <li class="collection-item">
-          <span class="title"><%= chat.created_at.to_s.slice(0,19) %></span>
-          <p><%= chat.message %></p>
-        </li>
-      <% end %>
+<div class="card">
+  <div class="card-tabs">
+    <ul class="tabs tabs-fixed-width">
+      <li class="tab"><a class="active" href="#comment">コメント</a></li>
+      <li class="tab"><a href="#chat">チャット</a></li>
+      <li class="tab"><a href="#userlist">ユーザーリスト</a></li>
     </ul>
-  <% end %>
-<% end %>
+  </div>
+  <div class="card-content grey lighten-4">
+    <div id="comment">
+      <table>
+        <thead>
+          <tr>
+            <th>ユーザー名</th>
+            <th>メッセージ</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @comments.each do |comment| %>
+            <% if comment.visible==true %>
+              <tr>
+                <td><%= comment.user_id %></td>
+                <td><%= comment.message %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
 
-仕事に関するコメント
-
-<table>
-  <thead>
-    <tr>
-      <th>ユーザー名</th>
-      <th>メッセージ</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @comments.each do |comment| %>
-      <% if comment.visible==true %>
-        <tr>
-          <td><%= comment.user_id %></td>
-          <td><%= comment.message %></td>
-          <td><%#= link_to 'Show', comment %></td>
-          <td><%#= link_to 'Edit', edit_comment_path(comment) %></td>
-          <td><%#= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+      <% if user_signed_in? %>
+      <%= form_tag({ :controller => 'jobs', :action => 'create_comment'},{ :method => :post}) do %>
+        <%= text_field_tag :message %>
+        <%= hidden_field_tag :user_id, current_user.id %>
+        <%= hidden_field_tag :job_id, @job.id %>
+        <%= submit_tag "送信", :class=>"waves-effect waves-light btn" %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </div>
+    <div id="chat">
+      <% if not user_signed_in? %>
+      <% elsif current_user.id == @job.user_id %>
+        <%= button_to "問い合わせ一覧", worker_list_job_path(@job), :class=>"waves-effect waves-light btn", method: :get %>
+      <% else %>
+        <ul class="collection">
+        <% @chat_list.each do |chat| %>
+          <% side ="text-align:"+ (current_user.id==chat.from_id ? "right" : "left" ) %>
+          <li class="collection-item" style= <%= side %> >
+            <span class="title" ><%= "#{User.find_by(id: chat.from_id).name.to_s} #{chat.created_at}" %></span><br/>
+            <span ><%= chat.message %></span>
+          </li>
+        <% end %>
+        </ul>
 
-<br>
-
-<% if user_signed_in? %>
-<%= form_tag({ :controller => 'jobs', :action => 'create_comment'},{ :method => :post}) do %>
-<%= text_field_tag :message %>
-<%= hidden_field_tag :user_id, current_user.id %>
-<%= hidden_field_tag :job_id, @job.id %>
-<%= submit_tag "送信" %>
-<% end %>
-<% end %>
+        <%= form_tag({ :controller => 'jobs', :action => 'create_message'},{ :method => :post}) do %>
+          <%= label "メッセージ", :message %>
+          <%= text_field_tag :message %>
+          <%= hidden_field_tag :from_id, current_user.id %>
+          <%= hidden_field_tag :to_id, @employer.id %>
+          <%= submit_tag "送信", :class=>"waves-effect waves-light btn" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div id="userlist">
+    </div>
+  </div>
+</div>
