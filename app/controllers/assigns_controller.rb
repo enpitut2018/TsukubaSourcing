@@ -1,38 +1,30 @@
 class AssignsController < ApplicationController
-  before_action :set_assign, only: [:show, :edit, :update, :destroy]
-
-  # GET /assigns
-  # GET /assigns.json
-  def index
-    @assigns = Assign.all
-  end
-
-  # GET /assigns/1
-  # GET /assigns/1.json
-  def show
-  end
-
-  # GET /assigns/new
-  def new
-    @assign = Assign.new
-  end
-
-  # GET /assigns/1/edit
-  def edit
-  end
+  before_action :authenticate_user!
+  before_action :set_assign, only: [:update, :destroy]
 
   # POST /assigns
   # POST /assigns.json
   def create
     @assign = Assign.new(assign_params)
-
-    respond_to do |format|
-      if @assign.save
-        format.html { redirect_to @assign.job, notice: 'Assign was successfully created.' }
-        format.json { render :show, status: :created, location: @assign }
-      else
-        format.html { render :new }
-        format.json { render json: @assign.errors, status: :unprocessable_entity }
+    if current_user.id != @assign.user_id
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: '参加する権限がありません' }
+        format.json { head :no_content }
+      end
+    elsif (job = Job.find_by(id: params[:assign][:job_id])) != nil and job.user_id == @assign.user_id
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: '自分の仕事には参加できません' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        if @assign.save
+          format.html { redirect_to @assign.job, notice: '参加しました' }
+          format.json { render :show, status: :created, location: @assign }
+        else
+          format.html { redirect_to root_path }
+          format.json { render json: @assign.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -40,13 +32,20 @@ class AssignsController < ApplicationController
   # PATCH/PUT /assigns/1
   # PATCH/PUT /assigns/1.json
   def update
-    respond_to do |format|
-      if @assign.update(assign_params)
-        format.html { redirect_back fallback_location: root_path, notice: 'Assign was successfully updated.' }
-        format.json { render :show, status: :ok, location: @assign }
-      else
-        format.html { render :edit }
-        format.json { render json: @assign.errors, status: :unprocessable_entity }
+    if current_user.id != @assign.user_id
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: '変更する権限がありません' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        if @assign.update(assign_params)
+          format.html { redirect_back fallback_location: root_path }
+          format.json { render :show, status: :ok, location: @assign }
+        else
+          format.html { redirect_to root_path }
+          format.json { render json: @assign.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -54,10 +53,17 @@ class AssignsController < ApplicationController
   # DELETE /assigns/1
   # DELETE /assigns/1.json
   def destroy
-    @assign.destroy
-    respond_to do |format|
-      format.html { redirect_to assigns_url, notice: 'Assign was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.id != @assign.user_id
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: '削除する権限がありません' }
+        format.json { head :no_content }
+      end
+    else
+      @assign.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.json { head :no_content }
+      end
     end
   end
 
