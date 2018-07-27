@@ -17,7 +17,7 @@
         <li><a href="/jobs">仕事一覧</a></li>
         <% if user_signed_in? %>
           <li><a href="/jobs/new">仕事をお願いする</a></li>
-          <li><%= link_to current_user[:name], users_show_path(current_user[:id]) %></li>
+          <li><%= link_to current_user[:name], controller: "users", action: "show", id: current_user[:id] %></li>
           <li><a href="/users/sign_out">ログアウト</a></li>
         <% else %>
           <li><a href="/users/sign_up">新規登録</a></li>
