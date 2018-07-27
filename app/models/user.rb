@@ -10,5 +10,5 @@ class User < ApplicationRecord
   has_many :comments
   has_many :reviews
   validates :name, presence: true, length: {maximum: 50}
-
+  validates :email, presence: true, uniqueness: true
 end
