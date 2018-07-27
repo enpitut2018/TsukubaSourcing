@@ -20,8 +20,8 @@
           <li><%= link_to current_user[:name], users_show_path(current_user[:id]) %></li>
           <li><a href="/users/sign_out">ログアウト</a></li>
         <% else %>
-          <li><a href="/users/sign_up">ログイン</a></li>
-          <li><a href="/users/sign_in">新規登録</a></li>
+          <li><a href="/users/sign_up">新規登録</a></li>
+          <li><a href="/users/sign_in">ログイン</a></li>
         <% end %>
       </ul>
     </div>
