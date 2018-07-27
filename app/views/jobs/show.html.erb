@@ -111,9 +111,8 @@
                   %>
                 <% elsif assign.status == 'join' %>
                   <%= button_to '完了',
-                    assign_path(assign),
-                    method: :put,
-                    params:{assign:{status: 'complete'}},
+                    review_assign_path(assign),
+                    method: :get,
                     class: "red lighten-1 waves-effect waves-light btn"
                   %>
                 <% elsif assign.status == 'complete' %>
@@ -125,7 +124,6 @@
                   %>
                 <% end %>
               </td>
-              <td><%= link_to "レビュー", review_assign_path(assign) %></td>
             </tr>
           <% end %>
         </tbody>

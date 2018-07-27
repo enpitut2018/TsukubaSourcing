@@ -6,8 +6,8 @@ class ReviewsController < ApplicationController
       if Assign.find_by(user_id: @review.user_id, job_id: @review.job_id) != nil &&
          current_user.jobs.find(@review.job_id) != nil &&
          @review.save
-        p "おけ"
-        p @review
+        # レビューしたら仕事のステータスを完了にする
+        Assign.find_by(user_id: @review.user_id, job_id: @review.job_id).update({status: :complete})
         format.html { redirect_to @review.job, notice: 'Review was successfully created.' }
         format.json { render :show, status: :created, location: @review }
       else
