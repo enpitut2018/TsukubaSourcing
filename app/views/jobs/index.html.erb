@@ -18,7 +18,8 @@
         <td><%= job.description %></td>
         <% assign = user_signed_in? && Assign.find_by(user_id: current_user.id, job_id: job.id) %>
         <td>
-        <% if !user_signed_in? || assign == nil %>
+        <% if user_signed_in? && current_user.id == job.user.id %>
+        <% elsif !user_signed_in? || assign == nil %>
           <%= button_to '参加申請',
             assigns_path,
             method: :post,
