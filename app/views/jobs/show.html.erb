@@ -26,8 +26,9 @@
   <div class="card-tabs">
     <ul class="tabs tabs-fixed-width">
       <li class="tab"><a class="active" href="#comment">コメント</a></li>
-      <li class="tab"><a href="#chat">チャット</a></li>
-      <% if @users != nil && current_user == @employer %>
+      <% if current_user != @employer %>
+        <li class="tab"><a href="#chat">チャット</a></li>
+      <% else %>
         <li class="tab"><a href="#userlist">参加者一覧</a></li>
       <% end %>
     </ul>
@@ -65,6 +66,7 @@
       <% end %>
       <% end %>
     </div>
+    <% if current_user != @employer %>
     <div id="chat">
       <% if not user_signed_in? %>
       <% elsif current_user.id == @job.user_id %>
@@ -89,7 +91,7 @@
         <% end %>
       <% end %>
     </div>
-    <% if @users != nil && current_user == @employer %>
+    <% else %>
     <div id="userlist">
       <table>
         <thead>
@@ -125,6 +127,14 @@
                     class: "waves-effect waves-light btn disabled"
                   %>
                 <% end %>
+              </td>
+              <td>
+                <%=
+                  button_to "チャット開始",
+                  chat_job_path(@job),
+                  class: "waves-effect waves-light btn",
+                  method: :get, params: {worker_id: user.id}
+                %>
               </td>
             </tr>
           <% end %>
