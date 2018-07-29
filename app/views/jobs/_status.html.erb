@@ -1,0 +1,30 @@
+<% if !user_signed_in? || assign == nil %>
+    <%= button_to '参加申請',
+    assigns_path,
+    method: :post,
+    params:{assign:{job_id: job.id, user_id: user_signed_in? ? current_user.id : -1, status: 'applying'}},
+    class: "waves-effect waves-light btn " + (!user_signed_in? ? "disabled" : ""),
+    id: :join_form
+    %>
+<% elsif assign.status == 'applying' %>
+    <%= button_to '参加申請中',
+    assign_path(assign),
+    method: :put,
+    params:{assign:{status: ''}},
+    class: "waves-effect waves-light btn disabled"
+    %>
+<% elsif assign.status == 'join' %>
+    <%= button_to '参加中',
+    assign_path(assign),
+    method: :put,
+    params:{assign:{status: ''}},
+    class: "waves-effect waves-light btn disabled"
+    %>
+<% elsif assign.status == 'complete' %>
+    <%= button_to '完了済み',
+    assign_path(assign),
+    method: :put,
+    params:{assign:{status: ''}},
+    class: "waves-effect waves-light btn disabled"
+    %>
+<% end %>

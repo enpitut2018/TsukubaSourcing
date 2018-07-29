@@ -18,36 +18,9 @@
         <td><%= job.description %></td>
         <% assign = user_signed_in? && Assign.find_by(user_id: current_user.id, job_id: job.id) %>
         <td>
-        <% if user_signed_in? && current_user.id == job.user.id %>
-        <% elsif !user_signed_in? || assign == nil %>
-          <%= button_to '参加申請',
-            assigns_path,
-            method: :post,
-            params:{assign:{job_id: job.id, user_id: user_signed_in? ? current_user.id : -1, status: 'applying'}},
-            class: "waves-effect waves-light btn " + (!user_signed_in? ? "disabled" : ""),
-            id: :join_form
-          %>
-        <% elsif assign.status == 'applying' %>
-          <%= button_to '参加申請中',
-            assign_path(assign),
-            method: :put,
-            params:{assign:{status: ''}},
-            class: "waves-effect waves-light btn disabled"
-          %>
-        <% elsif assign.status == 'join' %>
-          <%= button_to '参加中',
-            assign_path(assign),
-            method: :put,
-            params:{assign:{status: ''}},
-            class: "waves-effect waves-light btn disabled"
-          %>
-        <% elsif assign.status == 'complete' %>
-          <%= button_to '完了済み',
-            assign_path(assign),
-            method: :put,
-            params:{assign:{status: ''}},
-            class: "waves-effect waves-light btn disabled"
-          %>
+        <% isOwner = user_signed_in? && current_user.id == job.user_id %>
+        <% if !isOwner %>
+          <%= render 'status', job: job, assign: assign %>
         <% end %>
         </td>
         <td><%= link_to '詳細ページ', job %></td>
