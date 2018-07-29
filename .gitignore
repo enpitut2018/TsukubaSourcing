@@ -33,3 +33,5 @@ vendor/bundle
 /config/master.key
 
 /Gemfile
+
+.DS_Store

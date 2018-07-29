@@ -1,14 +1,13 @@
-<h1>Assigns#review</h1>
-<p>Find me in app/views/assigns/review.html.erb</p>
+<h1>レビュー</h1>
+<h5><%= @assign.user.name %>さんへのレビューを書いてください</h5>
 
 <%= form_for :review, url: reviews_path do |form| %>
-  <div class="field">
-    <%= form.label :rating %>
-    <%= form.number_field :rating %>
+  <div class="field" id="star">
+    <%= form.label "評価" %>
   </div>
 
   <div class="field">
-    <%= form.label :comment %>
+    <%= form.label "コメント" %>
     <%= form.text_area :comment %>
   </div>
 
@@ -19,3 +18,12 @@
     <%= form.submit "送信" %>
   </div>
 <% end %>
+
+<script>
+$('#star').raty({
+  size     : 36,
+  starOff:  '<%= asset_path('star-off.png') %>',
+  starOn : '<%= asset_path('star-on.png') %>',
+  scoreName: 'review[rating]'
+});
+</script>

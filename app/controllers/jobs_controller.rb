@@ -105,7 +105,12 @@ class JobsController < ApplicationController
     pp = params.permit(:message, :from_id , :to_id)
     pp[:job_id] = @job.id
     Chat.create(pp)
-    redirect_back fallback_location: root_path
+    fromOwner = pp[:from_id].to_i == @job.user_id
+    if fromOwner
+      redirect_back fallback_location: root_path
+    else
+      redirect_to "/jobs/" + @job.id.to_s + "#chat"
+    end
   end
 
   def worker_list
