@@ -16,6 +16,16 @@ class JobsController < ApplicationController
     @comments = @job.comments
     @users = User.where(id: Assign.where(job_id: @job.id).select(:user_id))
     @assigns = Assign.where(job_id: @job.id)
+    #p Chat.where(to_id: current_user.id, job_id: @job.id)
+    result= user_signed_in? ? Chat.where(to_id: current_user.id, job_id: @job.id).select(:from_id).uniq : []
+    hoge=[];
+
+    result.each do |e|
+      hoge.push(e.from_id)
+    end
+
+    @senders= User.find(hoge)
+
   end
 
   # GET /jobs/new
@@ -114,14 +124,14 @@ class JobsController < ApplicationController
   end
 
   def worker_list
-    p Chat.where(to_id: current_user.id, job_id: @job.id)
+    #p Chat.where(to_id: current_user.id, job_id: @job.id)
     result= Chat.where(to_id: current_user.id, job_id: @job.id).select(:from_id).uniq
     hoge=[];
     result.each do |e|
       hoge.push(e.from_id)
     end
 
-    @workers = User.find(hoge)
+    @sender= User.find(hoge)
   end
 
   def chat
